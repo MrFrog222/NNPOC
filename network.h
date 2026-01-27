@@ -1,5 +1,14 @@
 #pragma once
 
 #include "defs.h"
+#include <vector>
 
-extern Network initNetwork(std::vector<int> input, int outputs);
+class Network{
+    public:
+        Network(Layer input,Layer output);
+        Layer input;
+        std::vector<Layer> hidden; //TODO
+        Layer output;
+};
+
+extern Network initNetwork(Layer input, int outputs);

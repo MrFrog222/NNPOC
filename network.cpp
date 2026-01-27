@@ -2,7 +2,12 @@
 #include "rand.h"
 #include "math.h"
 
-Network initNetwork(std::vector<int> input, int outputs) {
+Network::Network(Layer input, Layer output) {
+    this->input = input;
+    this->output = output;
+}
+
+Network initNetwork(Layer input, int outputs) {
     Layer output = {};
 
     for(int i = 0; i < outputs; i++) {
@@ -10,7 +15,7 @@ Network initNetwork(std::vector<int> input, int outputs) {
         for(int i = 0; i < input.size(); i++) {
             weights.push_back(randFloat(-(1/sqrt(input.size())), 1/sqrt(input.size())));
         }
-        output.push_back(Neuron{weights, 0});
+        output.push_back(Neuron(weights, 0/*Temporary Value assuming no hidden Layers*/));
     }
-    return Network{input, output};
+    return Network(input, output);
 }
