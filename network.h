@@ -9,6 +9,7 @@ class Network{
         Layer input;
         std::vector<Layer> hidden; //TODO
         Layer output;
+        float getPrediction();
 };
 
 extern Network initNetwork(Layer input, int outputs);

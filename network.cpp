@@ -7,6 +7,12 @@ Network::Network(Layer input, Layer output) {
     this->output = output;
 }
 
+float Network::getPrediction() {
+    if(this->hidden.size() == 0) {
+        
+    }
+}
+
 Network initNetwork(Layer input, int outputs) {
     Layer output = {};
 

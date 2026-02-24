@@ -1,11 +1,12 @@
 #include "neuron.h"
+#include <algorithm>
 
 Neuron::Neuron(std::vector<float> weights, float bias) {
     this->weights = weights;
     this->bias = bias;
 }
 
-void Neuron::computeOutput(Layer prev) {
+void Neuron::computeSum(std::vector<Neuron> prev) {
     float net = 0;
 
     for(int i = 0; i < prev.size(); i++) {
@@ -14,5 +15,5 @@ void Neuron::computeOutput(Layer prev) {
 
     net += this->bias;
 
-    this->output = net;
+    this->sum = net;
 }

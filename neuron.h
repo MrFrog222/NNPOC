@@ -9,7 +9,8 @@ class Neuron{
         std::vector<float> weights;
         float bias;
         float output;
-        void computeOutput(Layer prev);
+        float sum;
+        void computeSum(std::vector<Neuron> prev);
 };
 
 class InputNeuron: public Neuron{
