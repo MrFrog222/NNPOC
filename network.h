@@ -2,14 +2,13 @@
 
 #include "defs.h"
 #include <vector>
+#include "layer.h"
 
 class Network{
     public:
-        Network(Layer input,Layer output);
-        Layer input;
-        std::vector<Layer> hidden; //TODO
-        Layer output;
-        float getPrediction();
+        Network(std::vector<Layer> layers);
+        std::vector<Layer> layers; //TODO
+        int getPrediction();
 };
 
 extern Network initNetwork(Layer input, int outputs);

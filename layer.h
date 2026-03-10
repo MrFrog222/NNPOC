@@ -6,8 +6,4 @@ class Layer{
     public:
         Layer(std::vector<Neuron> neurons);
         std::vector<Neuron> neurons;
-
-
 };
-
-//TODO: OutputLayer class and implementation of activation functions

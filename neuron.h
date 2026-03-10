@@ -1,7 +1,6 @@
 #pragma once
 
 #include <vector>
-#include "defs.h"
 
 class Neuron{
     public:
