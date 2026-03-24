@@ -1,6 +1,6 @@
 #pragma once
 
-#include "defs.h"
+#include "funcs.h"
 #include <vector>
 #include "layer.h"
 
