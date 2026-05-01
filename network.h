@@ -3,6 +3,7 @@
 #include "funcs.h"
 #include <vector>
 #include "layer.h"
+#include <fstream>
 
 class Network{
     public:
@@ -17,3 +18,5 @@ class Network{
 };
 
 extern Network initNetwork(Layer input, int outputs, int hidden, int hidden_neurons);
+extern Network initNetworkFromFile(std::string filePath);
+extern void NetworkToFile(std::string filePath, Network& net);

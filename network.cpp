@@ -1,6 +1,8 @@
 #include "network.h"
 #include "rand.h"
 #include "math.h"
+#include <string>
+#include <iomanip>
 
 Network::Network(std::vector<Layer> layers) {
     this->layers = layers;
@@ -103,4 +105,54 @@ void Network::train(int correctIndex, float learningRate) {
   computeOutputDeltas(correctIndex);
   computeHiddenDeltas();
   updateWeights(learningRate);
+}
+
+void NetworkToFile(std::string filePath, Network& net) {
+  std::ofstream file(filePath);
+
+  file << net.layers.size() << "\n";
+  for(Layer& l : net.layers) {
+    file << l.neurons.size() << "\n";
+    for(Neuron& n : l.neurons) {
+      file << n.weights.size() << "\n";
+      for(float w : n.weights) {
+        file << std::setprecision(9) << w << "\n";
+      }
+      file << n.bias << "\n";
+    }
+  }
+
+  file.close();
+}
+
+Network initNetworkFromFile(std::string filePath) {
+  std::ifstream file(filePath);
+  std::string line;
+
+  Network net({});
+
+  std::getline(file, line);
+  int layers = std::stoi(line);
+  for(int i = 0; i < layers; i++) {
+    Layer layer({});
+    std::getline(file, line);
+    int neurons = std::stoi(line);
+    for(int j = 0; j < neurons; j++) {
+      Neuron neuron({}, 0.0f);
+      std::getline(file, line);
+      int weights = std::stoi(line);
+      for(int k = 0; k < weights; k++) {
+        std::getline(file, line);
+        float weight = std::stof(line);
+        neuron.weights.push_back(weight);
+      }
+      std::getline(file, line);
+      float bias = std::stof(line);
+      neuron.bias = bias;
+      layer.neurons.push_back(neuron);
+    }
+    net.layers.push_back(layer);
+  }
+
+  return net;
 }
