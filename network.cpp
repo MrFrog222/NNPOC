@@ -66,5 +66,41 @@ void Network::computeOutputDeltas(int correctIndex) {
 }
 
 void Network::computeHiddenDeltas() {
+  for(int i = layers.size() - 2; i > 0; i--) {
+    for(int j = 0; j < layers[i].neurons.size(); j++) {
+      float sum = 0;
 
+      for(int k = 0; k < layers[i+1].neurons.size(); k++) {
+        Neuron& n = layers[i+1].neurons[k];
+        sum += n.weights[j] * n.delta;
+      }
+
+      float relu_deriv = (layers[i].neurons[j].sum > 0) ? 1.0f : 0.0f;
+
+      layers[i].neurons[j].delta = sum * relu_deriv;
+    }
+  }
+}
+
+void Network::updateWeights(float learningRate) {
+  for(int i = 1; i < layers.size(); i++) {
+    for(int j = 0; j < layers[i].neurons.size(); j++) {
+      Neuron& n = layers[i].neurons[j];
+      for(int k = 0; k < layers[i-1].neurons.size(); k++) {
+        float prev_output = layers[i-1].neurons[k].output;
+        float gradient = prev_output * n.delta;
+
+        n.weights[k] -= gradient * learningRate;
+      }
+
+      n.bias -= n.delta * learningRate;
+    }
+  }
+}
+
+void Network::train(int correctIndex, float learningRate) {
+  getPrediction();
+  computeOutputDeltas(correctIndex);
+  computeHiddenDeltas();
+  updateWeights(learningRate);
 }
