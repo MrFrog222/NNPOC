@@ -9,6 +9,7 @@ class Neuron{
         float bias;
         float output;
         float sum;
+        float delta;
         void computeSum(std::vector<Neuron> prev);
 };
 
