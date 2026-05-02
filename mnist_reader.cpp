@@ -8,7 +8,7 @@ uint32_t readBigEndian(std::ifstream &file) {
   return (bytes[0] << 24) | (bytes[1] << 16) | (bytes[2] << 8) | bytes[3];
 }
 
-std::vector<Sample> loadMNIST(std::string &imagePath, std::string &labelPath) {
+std::vector<Sample> loadMNIST(std::string imagePath, std::string labelPath) {
   std::ifstream imgFile(imagePath, std::ios::binary);
   std::ifstream labelFile(labelPath, std::ios::binary);
 
@@ -39,13 +39,13 @@ std::vector<Sample> loadMNIST(std::string &imagePath, std::string &labelPath) {
       uint8_t pixel;
       imgFile.read(reinterpret_cast<char*>(&pixel), 1);
 
-      pixels.push_back(pixel/255.0f);
+      pixels[j] = pixel/255.0f;
     }
 
     uint8_t label;
     labelFile.read(reinterpret_cast<char*>(&label), 1);
 
-    dataset.push_back((Sample){pixels, label});
+    dataset[i] = (Sample){pixels, label};
   }
   return dataset;
 }

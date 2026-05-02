@@ -14,7 +14,7 @@ class Network{
         void computeOutputDeltas(int correctIndex);
         void computeHiddenDeltas();
         void updateWeights(float learningRate);
-        void train(int correctIndex, float learningRate);
+        int train(int correctIndex, float learningRate);
 };
 
 extern Network initNetwork(Layer input, int outputs, int hidden, int hidden_neurons);

@@ -100,11 +100,12 @@ void Network::updateWeights(float learningRate) {
   }
 }
 
-void Network::train(int correctIndex, float learningRate) {
-  getPrediction();
+int Network::train(int correctIndex, float learningRate) {
+  int pred = getPrediction();
   computeOutputDeltas(correctIndex);
   computeHiddenDeltas();
   updateWeights(learningRate);
+  return pred;
 }
 
 void NetworkToFile(std::string filePath, Network& net) {
@@ -116,9 +117,9 @@ void NetworkToFile(std::string filePath, Network& net) {
     for(Neuron& n : l.neurons) {
       file << n.weights.size() << "\n";
       for(float w : n.weights) {
-        file << std::setprecision(9) << w << "\n";
+        file << std::setprecision(std::numeric_limits<float>::max_digits10) << w << "\n";
       }
-      file << n.bias << "\n";
+      file << std::setprecision(std::numeric_limits<float>::max_digits10) << n.bias << "\n";
     }
   }
 

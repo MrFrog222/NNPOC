@@ -10,4 +10,4 @@ typedef struct {
 } Sample;
 
 extern uint32_t readBigEndian(std::ifstream& file);
-extern std::vector<Sample> loadMNIST(std::string& imagePath, std::string& labelPath);
+extern std::vector<Sample> loadMNIST(std::string imagePath, std::string labelPath);
