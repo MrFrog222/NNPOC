@@ -1,2 +1,4 @@
 #!/bin/bash
-g++ *.cpp -o main && ./main
+
+./comp.sh
+build/nnpoc
