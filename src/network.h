@@ -1,19 +1,18 @@
 #ifndef NETWORK_H
 #define NETWORK_H
 
-#include "ext/list.h"
+//#include "ext/list.h" not sure if this is needed yet
+#include "ext/array.h"
 #include "neuron.h"
 #include <stddef.h>
 
-DEFINE_LIST(Neuron, Neuron)
-typedef List_Neuron Layer;
+DEFINE_ARR(Layer, Layer)
+typedef Arr_Layer Network;
 
-DEFINE_LIST(Layer, Layer)
-typedef List_Layer Network;
+DEFINE_ARR(size_t, size_t)
 
-DEFINE_LIST(size_t, size_t)
-
-Network Network_create(Layer input, List_size_t layerDesc);
+Network Network_create(Layer input, Arr_size_t layerDesc);
+void Network_free(Network *net);
 int Network_forwardPass();
 void Network_computeOutputDelta(Network net, int correctIndex);
 void Network_computeHiddenDeltas(Network net);

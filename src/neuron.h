@@ -2,18 +2,24 @@
 #define NEURON_H
 
 #include "ext/list.h"
+#include "ext/array.h"
 
-DEFINE_LIST(float, float)
+DEFINE_ARR(float, float)
 
 typedef struct Neuron {
-  List_float weights;
+  Arr_float weights;
   float bias;
   float sum;
   float output;
   float delta;
 } Neuron;
 
-Neuron Neuron_create(List_float weights, float bias);
+DEFINE_ARR(Neuron, Neuron)
+typedef Arr_Neuron Layer;
+
+Neuron Neuron_create(Arr_float weights, float bias);
 Neuron InputNeuron_create(float output); //only use this to create input neurons
+
+void softmax(Layer output);
 
 #endif
