@@ -15,14 +15,14 @@ typedef struct List_##name {\
 \
 List_##name List_##name##_create(size_t capacity) {\
   capacity += capacity == 0;\
-  type* arr = malloc(capacity * sizeof(type));\
+  type* arr = (type*)malloc(capacity * sizeof(type));\
   return (List_##name){arr, 0, capacity};\
 }\
 \
 void List_##name##_push(List_##name *list, type *obj) {\
   if(list->len >= list->capacity) {\
     list->capacity *= 2;\
-    list->arr = realloc(list->arr, list->capacity * sizeof(type));\
+    list->arr = (type*)realloc(list->arr, list->capacity * sizeof(type));\
   }\
   memcpy(list->arr + list->len, obj, sizeof(type));\
   list->len++;\
