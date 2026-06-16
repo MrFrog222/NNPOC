@@ -39,6 +39,17 @@ void Network_free(Network *net) {
   Arr_Layer_free(net);
 }
 
-int Network_forwardPass() {
+int Network_forwardPass(Network net) {
+  for(size_t i = 1; i < net.len; i++) {
+    Layer *layer = &net.arr[i];
 
+    for(size_t j = 0; j < layer->len; j++) {
+      Neuron_computeSum(&layer->arr[j]);
+    }
+
+    if(i == net.len - 1) return Network_getPrediction(*layer);
+    rectifier(*layer);
+  }
+
+  return -1;
 }

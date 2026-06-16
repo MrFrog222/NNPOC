@@ -13,7 +13,8 @@ DEFINE_ARR(size_t, size_t)
 
 Network Network_create(Layer input, Arr_size_t layerDesc);
 void Network_free(Network *net);
-int Network_forwardPass();
+int Network_getPrediction(Layer output);
+int Network_forwardPass(Network net);
 void Network_computeOutputDelta(Network net, int correctIndex);
 void Network_computeHiddenDeltas(Network net);
 void Network_correctVals(Network net, float learningRate);

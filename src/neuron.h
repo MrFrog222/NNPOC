@@ -19,7 +19,9 @@ typedef Arr_Neuron Layer;
 
 Neuron Neuron_create(Arr_float weights, float bias);
 Neuron InputNeuron_create(float output); //only use this to create input neurons
+void Neuron_computeSum(Neuron *neuron);
 
 void softmax(Layer output);
+void rectifier(Layer layer);
 
 #endif
