@@ -89,3 +89,21 @@ void Network_computeHiddenDeltas(Network net) {
     }
   }
 }
+
+void Network_correctVals(Network net, float learningRate) {
+  for(size_t i = 0; i < net.len; i++) {
+    Layer *layer = &net.arr[i];
+    for(size_t j = 0; j < layer->len; j++) {
+      Neuron *neuron = &layer->arr[j];
+
+      for(size_t k = 0; k < net.arr[i-1].len; k++) {
+        Neuron *prevNeuron = &net.arr[i-1].arr[k];
+        float gradient = prevNeuron->output * neuron->delta;
+
+        neuron->weights.arr[k] -= gradient * learningRate;
+      }
+
+      neuron->bias -= neuron->delta * learningRate;
+    }
+  }
+}
