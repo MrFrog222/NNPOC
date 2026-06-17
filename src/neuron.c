@@ -24,13 +24,13 @@ void Neuron_computeSum(Neuron *neuron, Layer prev) {
 
 int softmax(Layer output) {
   float sum = 0.0f;
-  for(size_t i = 0; i < output.len; i++) sum += exp(output.arr[i].sum);
+  for(size_t i = 0; i < output.len; i++) sum += expf(output.arr[i].sum);
 
   int bestIdx = 0;
   float bestProb = 0.0f;
 
   for(size_t i = 0; i < output.len; i++) {
-    output.arr[i].output = exp(output.arr[i].sum)/sum;
+    output.arr[i].output = expf(output.arr[i].sum)/sum;
     if(output.arr[i].output <= bestProb) continue;
     bestProb = output.arr[i].output;
     bestIdx = i;

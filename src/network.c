@@ -57,3 +57,35 @@ int Network_forwardPass(Network net) {
 
   return -1;
 }
+
+int Network_train(Network net, int correctIndex, float learningRate) {
+  int predict = Network_forwardPass(net);
+  Network_computeOutputDeltas(net, correctIndex);
+  Network_computeHiddenDeltas(net);
+  Network_correctVals(net, learningRate);
+  return predict;
+}
+
+void Network_computeOutputDeltas(Network net, int correctIndex) {
+  for(size_t i = 0; i < net.arr[net.len - 1].len; i++) {
+    Neuron *neuron = &net.arr[net.len - 1].arr[i];
+    neuron->delta = neuron->output - (i == correctIndex ? 1:0);
+  }
+}
+
+void Network_computeHiddenDeltas(Network net) {
+  for(size_t i = net.len - 2; i > 0; i--) {
+    Layer *layer = &net.arr[i];
+    for(size_t j = 0; j < layer->len; j++) {
+      Neuron *neuron = &layer->arr[j];
+      float sum = 0.0f;
+
+      for(size_t k = 0; k < net.arr[i + 1].len; k++) {
+        Neuron *nextNeuron = &net.arr[i+1].arr[k];
+        sum += nextNeuron->weights.arr[j] * nextNeuron->delta;
+      }
+
+      neuron->delta = sum * (neuron->sum < 0 ? 0:1); //sum * rectifier derivative
+    }
+  }
+}
