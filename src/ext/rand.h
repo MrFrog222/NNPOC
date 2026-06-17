@@ -5,8 +5,7 @@
 #include <time.h>
 #include <stddef.h>
 
-float randFloat(float min, float max) {
-  srand(time(NULL));
+static inline float randFloat(float min, float max) {
   return min + rand() / (float)RAND_MAX * (max - min);
 }
 

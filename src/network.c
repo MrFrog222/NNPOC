@@ -1,8 +1,11 @@
 #include "network.h"
 #include "ext/rand.h"
 #include <math.h>
+#include <stdlib.h>
+#include <time.h>
 
 Network Network_create(Layer input, Arr_size_t layerDesc) {
+  srand(time(NULL));
   Network net = (Arr_Layer){malloc((layerDesc.len + 1) * sizeof(Layer)), layerDesc.len + 1};
   
   Neuron* inputCopy = malloc(sizeof(Neuron) * input.len);
@@ -16,7 +19,7 @@ Network Network_create(Layer input, Arr_size_t layerDesc) {
       Neuron neuron = (Neuron){(Arr_float){malloc(sizeof(float) * net.arr[i-1].len), net.arr[i-1].len}, randFloat(-0.01, 0.01), 0, 0, 0};
 
       for(size_t k = 0; k < neuron.weights.len; k++) {
-        neuron.weights.arr[i] = randFloat(-1.0f/sqrtf(layer.len), 1.0f/sqrtf(layer.len));
+        neuron.weights.arr[k] = randFloat(-1.0f/sqrtf(net.arr[i - 1].len), 1.0f/sqrtf(net.arr[i-1].len));
       }
       layer.arr[j] = neuron;
     }
@@ -44,10 +47,11 @@ int Network_forwardPass(Network net) {
     Layer *layer = &net.arr[i];
 
     for(size_t j = 0; j < layer->len; j++) {
-      Neuron_computeSum(&layer->arr[j]);
+      Neuron_computeSum(&layer->arr[j], net.arr[i - 1]);
+      printf("%f\n", layer->arr[j].sum);
     }
 
-    if(i == net.len - 1) return Network_getPrediction(*layer);
+    if(i == net.len - 1) return softmax(*layer);
     rectifier(*layer);
   }
 

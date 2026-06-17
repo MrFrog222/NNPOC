@@ -1,3 +1,3 @@
 #!/bin/bash
 
-gcc src/*.c src/ext/*.c -o build/nnpoc -lm
+gcc src/*.c -o build/nnpoc -lm

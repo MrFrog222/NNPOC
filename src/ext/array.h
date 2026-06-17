@@ -9,7 +9,7 @@ typedef struct Arr_##name {\
   size_t len;\
 } Arr_##name;\
 \
-void Arr_##name##_free(Arr_##name *arr) {\
+static inline void Arr_##name##_free(Arr_##name *arr) {\
   free(arr->arr);\
   arr->arr = NULL;\
   arr->len = 0;\
