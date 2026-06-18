@@ -1,10 +1,8 @@
 #ifndef NEURON_H
 #define NEURON_H
 
-#include "ext/list.h"
 #include "ext/array.h"
-
-DEFINE_ARR(float, float)
+#include "ext/array_types.h"
 
 typedef struct Neuron {
   Arr_float weights;

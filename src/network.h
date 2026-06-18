@@ -18,5 +18,7 @@ void Network_computeOutputDeltas(Network net, int correctIndex);
 void Network_computeHiddenDeltas(Network net);
 void Network_correctVals(Network net, float learningRate);
 int Network_train(Network net, int correctIndex, float learningRate);
+void Network_saveToFile(const char* path);
+Network Network_loadFromFile(const char* path);
 
 #endif
